@@ -10,31 +10,48 @@ import type { RootState } from "../../components/store/store"
 export default function Dashboard(){
 
   const router = useRouter()
-    useEffect(() => {
+   const [authLoading, setAuthLoading] = useState(true)
+ useEffect(() => {
     async function check() {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
-        {
-          credentials: "include"
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
+          { credentials: "include" }
+        )
+
+        const data = await res.json()
+
+        if (!data.authenticated) {
+          router.replace("/login")
+        } else {
+          setAuthLoading(false)
         }
-      )
-
-      const data = await res.json()
-
-      if (!data.authenticated) {
-        router.push("/login")
+      } catch (e) {
+        router.replace("/login")
       }
     }
 
     check()
   }, [])
+
+if (authLoading) {
+  return (
+    <div className="flex justify-center items-center h-screen w-full">
+      <div className="h-12 w-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
+}
+
+
   const dispatch = useDispatch()
 
   const [tab,setTab] = useState<"projects"|"apps">("projects")
 
   const projects = useSelector((state: RootState) => state.projects.list)
   const apps = useSelector((state: RootState) => state.apps.list)
-  const loading = useSelector((state: RootState) => state.projects.loading || state.apps.loading)
+  const loading = useSelector(
+    (state: RootState) => state.projects.loading || state.apps.loading
+  )
 
   const [projectForm,setProjectForm] = useState({
     title:"",
