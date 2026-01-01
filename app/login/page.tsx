@@ -11,11 +11,13 @@ export default function Login() {
   async function submit(e: any) {
     e.preventDefault()
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    })
+   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/login`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ email, password })
+})
+
 
     if (res.ok) router.push("/dashboard")
     else setError("Wrong login details")

@@ -10,6 +10,24 @@ import type { RootState } from "../../components/store/store"
 export default function Dashboard(){
 
   const router = useRouter()
+    useEffect(() => {
+    async function check() {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
+        {
+          credentials: "include"
+        }
+      )
+
+      const data = await res.json()
+
+      if (!data.authenticated) {
+        router.push("/login")
+      }
+    }
+
+    check()
+  }, [])
   const dispatch = useDispatch()
 
   const [tab,setTab] = useState<"projects"|"apps">("projects")
@@ -85,10 +103,15 @@ export default function Dashboard(){
   }
 
   // ---------- LOGOUT ----------
-  async function logout(){
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{method:"POST"})
-    router.push("/login")
-  }
+async function logout(){
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{
+    method:"POST",
+    credentials:"include"
+  })
+
+  router.push("/login")
+}
+
 
   return (
     <div className="flex min-h-screen bg-green-50">

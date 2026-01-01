@@ -318,7 +318,7 @@ export function Chatbot() {
               "Greetings! 🌟 Welcome to CarConnect. What would you like to know?"
             ]
             reply = greetings[Math.floor(Math.random() * greetings.length)]
-            setSuggestions(["What services do you offer?", "Tell me about your app", "Who are your leaders?"])
+            setSuggestions(["What services do you offer?", "Tell me about your app", "Who are yOur Team?"])
           }
           // Company information
           else if ((q.includes("what") && q.includes("carconnect")) || q.includes("about carconnect") || q.includes("tell me about")) {
@@ -326,7 +326,7 @@ export function Chatbot() {
             setSuggestions(["What services do you offer?", "Who leads the company?", "How can I contact you?"])
           }
           else if ((q.includes("who") && (q.includes("leader") || q.includes("ceo") || q.includes("director"))) || q.includes("leadership") || q.includes("management")) {
-            reply = `Our leadership team includes:\n• ${CARCONNECT_INFO.leaders.md}\n• ${CARCONNECT_INFO.leaders.ceo}\n\nThey're driving innovation in Rwandan mobility! 💪`
+            reply = `Our Teamhip team includes:\n• ${CARCONNECT_INFO.leaders.md}\n• ${CARCONNECT_INFO.leaders.ceo}\n\nThey're driving innovation in Rwandan mobility! 💪`
             setSuggestions(["What is CarConnect?", "Contact the leaders", "Company services"])
           }
           // Services
