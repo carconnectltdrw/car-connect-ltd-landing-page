@@ -10,41 +10,9 @@ import type { RootState } from "../../components/store/store"
 export default function Dashboard(){
 
   const router = useRouter()
-   const [authLoading, setAuthLoading] = useState(true)
- useEffect(() => {
-    async function check() {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
-          { credentials: "include" }
-        )
-
-        const data = await res.json()
-
-        if (!data.authenticated) {
-          router.replace("/login")
-        } else {
-          setAuthLoading(false)
-        }
-      } catch (e) {
-        router.replace("/login")
-      }
-    }
-
-    check()
-  }, [])
-
-if (authLoading) {
-  return (
-    <div className="flex justify-center items-center h-screen w-full">
-      <div className="h-12 w-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  )
-}
-
-
   const dispatch = useDispatch()
 
+  const [authLoading, setAuthLoading] = useState(true)
   const [tab,setTab] = useState<"projects"|"apps">("projects")
 
   const projects = useSelector((state: RootState) => state.projects.list)
@@ -60,13 +28,34 @@ if (authLoading) {
     videoUrl:""
   })
 
-  // -------- APP FORM ----------
   const [appForm,setAppForm] = useState({
     name:"",
     thumbnail:"",
     playstore:"",
     appstore:""
   })
+
+  useEffect(() => {
+    async function check() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
+          { credentials: "include" }
+        )
+        const data = await res.json()
+
+        if (!data.authenticated) {
+          router.replace("/login")
+        } else {
+          setAuthLoading(false)
+        }
+      } catch {
+        router.replace("/login")
+      }
+    }
+
+    check()
+  }, [router])
 
   useEffect(()=>{ 
     dispatch(fetchProjects())
@@ -86,48 +75,48 @@ if (authLoading) {
     else setAppForm({...appForm,thumbnail:d.url})
   }
 
-  // ---------- SAVE PROJECT ----------
   async function saveProject(){
     await dispatch(createProject(projectForm))
     setProjectForm({title:"",type:"",mediaUrl:"",videoUrl:""})
   }
 
-  // ---------- SAVE APP ----------
   async function saveApp(){
     await dispatch(createApp(appForm))
     setAppForm({name:"",thumbnail:"",playstore:"",appstore:""})
   }
 
-  // ---------- DELETE ----------
   async function handleDeleteProject(id:number){
-    console.log('Deleting project with id:', id)
     try {
-      const result = await dispatch(deleteProject(id))
-      console.log('Delete result:', result)
+      await dispatch(deleteProject(id))
     } catch (error) {
-      console.error('Error deleting project:', error)
+      console.error(error)
     }
   }
 
   async function handleDeleteApp(id:number){
-    console.log('Deleting app with id:', id)
     try {
-      const result = await dispatch(deleteApp(id))
-      console.log('Delete result:', result)
+      await dispatch(deleteApp(id))
     } catch (error) {
-      console.error('Error deleting app:', error)
+      console.error(error)
     }
   }
 
-  // ---------- LOGOUT ----------
-async function logout(){
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{
-    method:"POST",
-    credentials:"include"
-  })
+  async function logout(){
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{
+      method:"POST",
+      credentials:"include"
+    })
+    router.push("/login")
+  }
 
-  router.push("/login")
-}
+  // ✅ SAFE EARLY RETURN (after ALL hooks)
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <div className="h-12 w-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
 
   return (
