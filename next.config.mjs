@@ -4,7 +4,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
  images: {
-    domains: ["carconnectbackend-gmmq.onrender.com"],
+    domains: ["res.cloudinary.com"],
   },
 
 }
