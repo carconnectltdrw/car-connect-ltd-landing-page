@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
 
 // GET — list all projects
 export async function GET() {
+  const { prisma } = await import("@/lib/prisma")
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
   })
@@ -11,6 +11,7 @@ export async function GET() {
 
 // POST — create project
 export async function POST(req: Request) {
+  const { prisma } = await import("@/lib/prisma")
   const body = await req.json()
 
   const project = await prisma.Project.create({

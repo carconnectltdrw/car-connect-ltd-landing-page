@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
 
 export async function DELETE(req: Request, { params }: { params: any }) {
+  const { prisma } = await import("@/lib/prisma")
   try {
     const resolvedParams = await params
     const id = parseInt(resolvedParams?.id)
