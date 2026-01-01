@@ -89,7 +89,7 @@ export function Projects() {
                       <Play size={24} className="fill-current ml-1" />
                     </div>
                     <span className="text-lg font-bold">
-                      {projects[index].video ? "Play Video"   : "No Video Available"}
+                      {projects[index].video ? "Play Video"   : ""}
                     </span>
                   </div>
                 </div>

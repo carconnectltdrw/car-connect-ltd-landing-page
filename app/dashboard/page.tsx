@@ -57,10 +57,13 @@ export default function Dashboard(){
     check()
   }, [router])
 
-  useEffect(()=>{ 
+  useEffect(() => {
+  if (!authLoading) {
     dispatch(fetchProjects())
     dispatch(fetchApps())
-  }, [dispatch])
+  }
+}, [authLoading, dispatch])
+
 
   // ---------- UPLOAD ----------
   async function upload(e:any,type:"media"|"thumbnail"|"video"){
