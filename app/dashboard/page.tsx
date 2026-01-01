@@ -43,7 +43,7 @@ export default function Dashboard(){
     const fd = new FormData()
     fd.append("file",e.target.files[0])
 
-    const res = await fetch("/api/upload",{method:"POST",body:fd})
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload`,{method:"POST",body:fd})
     const d = await res.json()
 
     if(type==="media") setProjectForm({...projectForm,mediaUrl:d.url})
@@ -86,7 +86,7 @@ export default function Dashboard(){
 
   // ---------- LOGOUT ----------
   async function logout(){
-    await fetch("/api/logout",{method:"POST"})
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{method:"POST"})
     router.push("/login")
   }
 

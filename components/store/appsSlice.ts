@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 export const fetchApps = createAsyncThunk(
   "apps/fetchApps",
   async () => {
-    const response = await fetch("/api/chat/apps")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/apps`)
     return response.json()
   }
 )
@@ -11,7 +11,7 @@ export const fetchApps = createAsyncThunk(
 export const createApp = createAsyncThunk(
   "apps/createApp",
   async (appData: any) => {
-    const response = await fetch("/api/chat/apps", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/apps`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(appData)
@@ -24,7 +24,7 @@ export const deleteApp = createAsyncThunk(
   "apps/deleteApp",
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`/api/chat/apps/${id}`, { method: "DELETE" })
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/apps/${id}`, { method: "DELETE" })
       if (!response.ok) {
         throw new Error('Failed to delete app')
       }

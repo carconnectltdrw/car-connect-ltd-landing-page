@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
   async () => {
-    const response = await fetch("/api/chat/projects")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/projects`)
     return response.json()
   }
 )
@@ -11,7 +11,7 @@ export const fetchProjects = createAsyncThunk(
 export const createProject = createAsyncThunk(
   "projects/createProject",
   async (projectData: any) => {
-    const response = await fetch("/api/chat/projects", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/projects`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(projectData)
@@ -23,7 +23,7 @@ export const deleteProject = createAsyncThunk(
   "projects/deleteProject",
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`/api/chat/projects/${id}`, { method: "DELETE" })
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/projects/${id}`, { method: "DELETE" })
       if (!response.ok) throw new Error("Failed to delete project")
       return id
     } catch (err) {

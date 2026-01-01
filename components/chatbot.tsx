@@ -60,7 +60,7 @@ export function Chatbot() {
   const [autoCloseTimeout, setAutoCloseTimeout] = useState<NodeJS.Timeout | null>(null)
   const [suggestions, setSuggestions] = useState<string[]>([])
   const { sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    transport: new DefaultChatTransport({ api: `${process.env.NEXT_PUBLIC_API_URL}/chat` }),
   })
   const isLoading = status === "streaming" || status === "submitted" || isTyping
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -94,7 +94,7 @@ export function Chatbot() {
 
     setIsSending(true)
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

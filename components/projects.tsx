@@ -11,7 +11,7 @@ export function Projects() {
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
-    fetch("/api/chat/projects")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/projects`)
       .then((res) => res.json())
       .then(setProjects)
   }, [])

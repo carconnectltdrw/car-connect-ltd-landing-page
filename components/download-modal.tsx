@@ -14,7 +14,7 @@ export function DownloadModal({ trigger }: { trigger: React.ReactNode }) {
   const [apps, setApps] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("/api/chat/apps")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/apps`)
       .then((res) => res.json())
       .then(setApps);
   }, []);
