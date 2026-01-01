@@ -7,21 +7,29 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+async function submit(e: any) {
+  e.preventDefault()
+  setError("")
 
-  async function submit(e: any) {
-    e.preventDefault()
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  })
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/login`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include",
-  body: JSON.stringify({ email, password })
-})
-
-
-    if (res.ok) router.push("/dashboard")
-    else setError("Wrong login details")
+  if (!res.ok) {
+    setError("Wrong login details")
+    return
   }
+
+  const data = await res.json()
+
+  // ✅ STORE TOKEN (mobile-safe)
+  sessionStorage.setItem("auth_token", data.token)
+
+  router.push("/dashboard")
+}
+
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-green-50">

@@ -36,26 +36,39 @@ export default function Dashboard(){
   })
 
   useEffect(() => {
-    async function check() {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
-          { credentials: "include" }
-        )
-        const data = await res.json()
+  async function check() {
+    const token = sessionStorage.getItem("auth_token")
 
-        if (!data.authenticated) {
-          router.replace("/login")
-        } else {
-          setAuthLoading(false)
-        }
-      } catch {
-        router.replace("/login")
-      }
+    if (!token) {
+      router.replace("/login")
+      return
     }
 
-    check()
-  }, [router])
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/chat/auth-check`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      const data = await res.json()
+
+      if (!data.authenticated) {
+        sessionStorage.removeItem("auth_token")
+        router.replace("/login")
+      } else {
+        setAuthLoading(false)
+      }
+    } catch {
+      router.replace("/login")
+    }
+  }
+
+  check()
+}, [router])
 
   useEffect(() => {
   if (!authLoading) {
@@ -104,13 +117,10 @@ export default function Dashboard(){
     }
   }
 
-  async function logout(){
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,{
-      method:"POST",
-      credentials:"include"
-    })
-    router.push("/login")
-  }
+ function logout() {
+  sessionStorage.removeItem("auth_token")
+  router.push("/login")
+}
 
   // ✅ SAFE EARLY RETURN (after ALL hooks)
   if (authLoading) {
