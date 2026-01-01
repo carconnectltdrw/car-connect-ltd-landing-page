@@ -49,49 +49,66 @@ export function Projects() {
                 transition={{ type: "spring", stiffness: 100, damping: 20 }}
                 className="w-full h-full"
               >
-                <div
-                  className={`w-full h-full rounded-[3rem] p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white`}
-                  style={{
-                    backgroundImage: projects[index].poster ? `url(${projects[index].poster})` : undefined,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                >
+       <div
+  className="w-full h-full rounded-[3rem] p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white"
+  style={{
+    backgroundImage: projects[index].poster
+      ? `url(${projects[index].poster})`
+      : undefined,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+
                   {/* Overlay for text readability */}
-                  <div className="absolute inset-0 bg-black/40 rounded-[3rem]" />
+                 <div
+  className={`absolute inset-0 bg-black/40 rounded-[3rem] transition-opacity duration-300 ${
+    playing ? "opacity-0" : "opacity-100"
+  }`}
+/>
+
                   
-                  {projects[index].video && playing && (
-                    <video
-                      src={projects[index].video}
-                      className="absolute inset-0 w-full h-full object-cover rounded-[3rem]"
-                      controls
-                      autoPlay
-                      onEnded={() => setPlaying(false)}
-                    />
-                  )}
+                {projects[index].video && (
+  <video
+    src={projects[index].video}
+    poster={projects[index].poster} // 👈 thumbnail image
+    className={`absolute inset-0 w-full h-full object-cover rounded-[3rem] transition-opacity ${
+      playing ? "opacity-100" : "opacity-0 pointer-events-none"
+    }`}
+    controls
+    playsInline
+    onEnded={() => setPlaying(false)}
+    autoPlay={playing}
+  />
+)}
+
                   
-                  <div className="space-y-2 relative z-10">
-                    <span className="text-xs font-black uppercase tracking-widest text-white/80">
-                      {projects[index].status}
-                    </span>
-                    <h3 className="text-4xl font-black leading-tight">{projects[index].title}</h3>
-                  </div>
-                  
-                  <div className="flex items-center gap-4 relative z-10">
-                    <div 
-                      className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white hover:text-brand-green transition-all cursor-pointer"
-                      onClick={() => {
-                        if (projects[index].video) {
-                          setPlaying(true)
-                        }
-                      }}
-                    >
-                      <Play size={24} className="fill-current ml-1" />
-                    </div>
-                    <span className="text-lg font-bold">
-                      {projects[index].video ? "Play Video"   : ""}
-                    </span>
-                  </div>
+                  <div
+  className={`relative z-10 transition-opacity duration-300 ${
+    playing ? "opacity-0" : "opacity-100"
+  }`}
+>
+  <div className="space-y-2">
+    <span className="text-xs font-black uppercase tracking-widest text-white/80">
+      {projects[index].status}
+    </span>
+    <h3 className="text-4xl font-black leading-tight">
+      {projects[index].title}
+    </h3>
+  </div>
+
+  <div className="flex items-center gap-4 mt-6">
+    <div
+      className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white hover:text-brand-green transition-all cursor-pointer"
+      onClick={() => projects[index].video && setPlaying(true)}
+    >
+      <Play size={24} className="fill-current ml-1" />
+    </div>
+    <span className="text-lg font-bold">
+      {projects[index].video ? "Play Video" : ""}
+    </span>
+  </div>
+</div>
                 </div>
               </motion.div>
             </AnimatePresence>
