@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, Play } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Projects() {
@@ -33,82 +33,61 @@ export function Projects() {
     }
   }
 
+  const currentProject = projects[index] || {
+    title: "Upcoming Project",
+    status: "Coming Soon",
+    poster: "",
+    video: "",
+  }
+
   return (
     <section id="projects" className="py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 text-center mb-16">Upcoming Projects</h2>
 
         {projects.length > 0 ? (
-          <div className="relative max-w-lg mx-auto h-[450px] perspective-1000">
+          <div className="relative w-full max-w-3xl mx-auto aspect-[4/5] md:aspect-[16/9]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
-                initial={{ rotateY: 90, opacity: 0, scale: 0.8 }}
-                animate={{ rotateY: 0, opacity: 1, scale: 1 }}
-                exit={{ rotateY: -90, opacity: 0, scale: 0.8 }}
-                transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.35 }}
                 className="w-full h-full"
               >
-       <div
-  className="w-full h-full rounded-[3rem] p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white"
-  style={{
-    backgroundImage: projects[index].poster
-      ? `url(${projects[index].poster})`
-      : undefined,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
+                <div
+                  className="w-full h-full rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white bg-slate-900"
+                  style={{
+                    backgroundImage: currentProject.poster ? `url(${currentProject.poster})` : undefined,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundColor: currentProject.poster ? undefined : "#0f172a",
+                  }}
+                >
 
-                  {/* Overlay for text readability */}
-                 <div
-  className={`absolute inset-0 bg-black/40 rounded-[3rem] transition-opacity duration-300 ${
-    playing ? "opacity-0" : "opacity-100"
-  }`}
-/>
-
-                  
-                {projects[index].video && (
-  <video
-    src={projects[index].video}
-    poster={projects[index].poster} // 👈 thumbnail image
-    className={`absolute inset-0 w-full h-full object-cover rounded-[3rem] transition-opacity ${
-      playing ? "opacity-100" : "opacity-0 pointer-events-none"
-    }`}
-    controls
-    playsInline
-    onEnded={() => setPlaying(false)}
-    autoPlay={playing}
-  />
-)}
-
-                  
+                  {/* Overlay for text readability - only at bottom */}
                   <div
-  className={`relative z-10 transition-opacity duration-300 ${
-    playing ? "opacity-0" : "opacity-100"
-  }`}
->
-  <div className="space-y-2">
-    <span className="text-xs font-black uppercase tracking-widest text-white/80">
-      {projects[index].status}
-    </span>
-    <h3 className="text-4xl font-black leading-tight">
-      {projects[index].title}
-    </h3>
-  </div>
+                    className={`absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-slate-950/80 to-transparent rounded-b-[2rem] md:rounded-b-[3rem] transition-opacity duration-300 ${
+                      playing ? "opacity-0" : "opacity-100"
+                    }`}
+                  />
 
-  <div className="flex items-center gap-4 mt-6">
-    <div
-      className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white hover:text-brand-green transition-all cursor-pointer"
-      onClick={() => projects[index].video && setPlaying(true)}
-    >
-      <Play size={24} className="fill-current ml-1" />
-    </div>
-    <span className="text-lg font-bold">
-      {projects[index].video ? "Play Video" : ""}
-    </span>
-  </div>
-</div>
+                  {/* Title and status positioned over the overlay */}
+                  <div
+                    className={`absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 z-20 transition-opacity duration-300 ${
+                      playing ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                    <div className="space-y-2 md:space-y-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-white/90">
+                        {currentProject.status || "Coming Soon"}
+                      </span>
+                      <h3 className="text-2xl md:text-3xl font-bold leading-tight text-white">
+                        {currentProject.title}
+                      </h3>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>

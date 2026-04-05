@@ -14,7 +14,7 @@ const FAQS = [
     q: "What is CarConnect Ltd?",
     a: "CarConnect Ltd is Rwanda's leading smart mobility and logistics technology provider based in Kicukiro, Kigali.",
   },
-  { q: "Who are the leaders?", a: "Our Managing Director is Promesse IRAKOZE and our CEO is John Mugiraneza." },
+  { q: "Who are the leaders?", a: "Our Chief Executive Officer CEO is Promesse IRAKOZE and our Chairman of the Board is John Mugiraneza." },
   {
     q: "How can I contact support?",
     a: "You can reach us at carconnectltd.rw@gmail.com or via WhatsApp at +250 780 114 522.",
@@ -38,7 +38,7 @@ const CARCONNECT_INFO = {
     location: "Kicukiro, Kigali – Rwanda"
   },
   leaders: {
-    md: "Promesse IRAKOZE (Managing Director)",
+    md: "Promesse IRAKOZE (Chief Executive Officer CEO)",
     ceo: "John Mugiraneza (CEO)"
   }
 }

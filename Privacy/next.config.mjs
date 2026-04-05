@@ -3,10 +3,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
- images: {
-    domains: ["res.cloudinary.com", "hebbkx1anhila5yf.public.blob.vercel-storage.com"],
+  images: {
+    unoptimized: true,
   },
-
 }
 
 export default nextConfig

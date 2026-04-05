@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { ReduxProvider } from "../components/store/ReduxProvider"
+import { LanguageProvider } from "../contexts/LanguageContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+        <LanguageProvider>
+          <ReduxProvider>
+            {children}
+          </ReduxProvider>
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>

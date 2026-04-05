@@ -157,7 +157,7 @@ export default function LandingPage() {
                     onChange={handleInputChange}
                     required
                     className="w-full bg-white border-slate-200 rounded-2xl h-14 px-6 focus:ring-2 focus:ring-brand-green outline-none transition-all"
-                    placeholder="John Doe"
+                    placeholder="Full Name"
                   />
                 </div>
                 <div className="space-y-2">
@@ -169,7 +169,7 @@ export default function LandingPage() {
                     onChange={handleInputChange}
                     required
                     className="w-full bg-white border-slate-200 rounded-2xl h-14 px-6 focus:ring-2 focus:ring-brand-green outline-none transition-all"
-                    placeholder="john@example.com"
+                    placeholder="Email Address"
                   />
                 </div>
                 <div className="space-y-2">
@@ -180,7 +180,7 @@ export default function LandingPage() {
                     onChange={handleInputChange}
                     required
                     className="w-full bg-white border-slate-200 rounded-3xl min-h-[160px] p-6 focus:ring-2 focus:ring-brand-green outline-none transition-all"
-                    placeholder="How can we help you?"
+                    placeholder="Message"
                   />
                 </div>
                 {submitMessage && (
@@ -261,7 +261,7 @@ export default function LandingPage() {
         </div>
         <div className="container mx-auto px-4 pt-12 mt-12 border-t border-slate-200 text-center">
           <p className="text-xs text-slate-400 font-medium tracking-widest uppercase">
-            © 2025 CarConnect Ltd. Created for Excellence in Rwanda.
+            © {new Date().getFullYear()} CarConnect Ltd. Created for Excellence in Rwanda.
           </p>
         </div>
       </footer>
