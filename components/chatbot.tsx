@@ -340,8 +340,8 @@ export function Chatbot() {
       }
       setMessages(prev => [...prev, reactionMessage])
       
-      // Wait for emoji to display for 6 seconds
-      await new Promise((resolve) => setTimeout(resolve, 6000))
+      // Wait for emoji animation to complete (0.45s animation + buffer)
+      await new Promise((resolve) => setTimeout(resolve, 600))
       
       // Remove the emoji and continue with text response
       setMessages(prev => prev.filter((message) => message.id !== reactionId))
