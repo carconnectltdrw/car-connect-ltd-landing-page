@@ -7,7 +7,6 @@ import { Send, X, MessageSquare, Bot, Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { FAQS } from "@/components/faq-data"
-
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
@@ -314,11 +313,14 @@ export function Chatbot() {
 
   const handleSendMessage = async (text: string) => {
     const trimmed = text.trim()
-    if (!trimmed || loading) return
+    if ((!trimmed && !attachedFile) || loading) return
 
+    const fileToSend = attachedFile
     let messageWithFile = trimmed
-    if (attachedFile) {
-      messageWithFile = `${trimmed} (User uploaded file: ${attachedFile.name})`
+    if (fileToSend) {
+      messageWithFile = trimmed
+        ? `${trimmed} (User uploaded file: ${fileToSend.name})`
+        : `User uploaded file: ${fileToSend.name}`
     }
 
     const userMessage = { role: "user" as const, content: messageWithFile }
@@ -327,6 +329,25 @@ export function Chatbot() {
     setAttachedFile(null)
     setLoading(true)
     setError(false)
+
+    if (fileToSend) {
+      const whatsappText = encodeURIComponent(
+        `Hello CarConnect Ltd, I would like to send this file: ${fileToSend.name}.\n\n${trimmed || "Please find the file attached."}`
+      )
+      const whatsappUrl = `https://wa.me/250780114522?text=${whatsappText}`
+      window.open(whatsappUrl, "_blank")
+
+      setMessages(prev => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "Your attachment request has been prepared and opened in WhatsApp. Please send the file there so our team can help you directly. 📎",
+        },
+      ])
+      setLoading(false)
+      return
+    }
 
     const reaction = detectReactionEmoji(trimmed)
     if (reaction) {
@@ -457,8 +478,12 @@ export function Chatbot() {
       >
         <div className="p-6 bg-[#30a648] text-white flex justify-between items-center shrink-0">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-pulse">
-              <Bot size={28} />
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-white/20 flex items-center justify-center backdrop-blur-sm animate-pulse">
+              <img
+                src="/Ai%20Carrconect.gif"
+                alt="CarConnect Assistant"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h4 className="font-bold text-lg">CarConnect Assistant</h4>
@@ -551,7 +576,6 @@ export function Chatbot() {
           onSubmit={(e) => {
             e.preventDefault()
             handleSendMessage(input)
-            setInput("")
           }}
           className="p-4 border-t border-slate-100 flex gap-2 bg-white items-center"
         >
@@ -562,21 +586,22 @@ export function Chatbot() {
             </div>
           </label>
           {attachedFile && (
-            <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
-              {attachedFile.name}
+            <div className="flex items-center gap-2 rounded-2xl bg-slate-100 px-3 py-2 text-xs text-slate-600 border border-slate-200">
+              <span>📎</span>
+              <span className="truncate max-w-[120px]">{attachedFile.name}</span>
             </div>
           )}
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask me anything about CarConnect... 😊"
+            placeholder={attachedFile ? `Attachment: ${attachedFile.name} — add a note...` : "Ask me anything about CarConnect... 😊"}
             className="flex-1 bg-slate-50 border-none rounded-2xl px-4 h-12 text-sm focus:ring-2 focus:ring-[#30a648] outline-none transition-all"
             disabled={loading}
           />
           <Button
             type="submit"
             size="icon"
-            disabled={loading || !input.trim()}
+            disabled={loading || (!input.trim() && !attachedFile)}
             className="bg-[#30a648] hover:bg-[#30a648]/90 rounded-2xl h-12 w-12 shrink-0 disabled:opacity-50 transition-all hover:scale-105"
           >
             <Send size={18} />

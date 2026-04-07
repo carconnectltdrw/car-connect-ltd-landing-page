@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Leadership } from "@/components/leadership"
 import { Projects } from "@/components/projects"
 import { AboutModal } from "@/components/about-modal"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Send, Instagram, Linkedin } from "lucide-react"
 import Link from "next/link"
 import { Chatbot } from "@/components/chatbot" // imported chatbot
 import { useState } from "react"
@@ -257,6 +257,26 @@ export default function LandingPage() {
             <h4 className="font-bold text-slate-900">Contact</h4>
             <p>Kicukiro, Kigali – Rwanda</p>
             <p>carconnectltd.rw@gmail.com</p>
+            <div className="flex gap-4 pt-4">
+              <a
+                href="https://www.instagram.com/carconnectltd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-600 hover:text-brand-green transition-colors"
+                aria-label="CarConnect Instagram"
+              >
+                <Instagram size={20} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/carconnect-ltd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-600 hover:text-brand-green transition-colors"
+                aria-label="CarConnect LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+            </div>
           </div>
         </div>
         <div className="container mx-auto px-4 pt-12 mt-12 border-t border-slate-200 text-center">
