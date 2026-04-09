@@ -6,7 +6,7 @@ import { LanguageProvider } from "../contexts/LanguageContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "MuvCar by Carconnect Ltd | Car Rental & Car Sharing in Rwanda",
+  title: "CarConnnect",
   description:
     "MuvCar by Carconnect Ltd is a smart platform for car rental and car sharing in Rwanda. Rent cars in Kigali or list your own vehicle easily with CarconnectLtd.",
   keywords: [
