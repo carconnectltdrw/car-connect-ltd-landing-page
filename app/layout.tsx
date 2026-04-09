@@ -37,9 +37,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
     apple: "/apple-icon.png",
   },
-  other: [
-    { name: 'google-site-verification', content: 'OZvDP0NmwueQcWYYnGjl94p02DJirItltOJt3Gb90o8' }
-  ],
+verification: {
+  google: "OZvDP0NmwueQcWYYnGjl94p02DJirItltOJt3Gb90o8",
+},
 }
 
 export default function RootLayout({
