@@ -6,16 +6,22 @@ import { LanguageProvider } from "../contexts/LanguageContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "CarConnnect",
+  title: "Car Connnect",
   description:
     "MuvCar by Carconnect Ltd is a smart platform for car rental and car sharing in Rwanda. Rent cars in Kigali or list your own vehicle easily with CarconnectLtd.",
   keywords: [
     "MuvCar",
+    "Gukodesha imodoka",
+    "Kodesha imodoka",
+    "Gukodesha imodoka mu Rwanda",
+    "Gukodesha imodoka Kigali",
+    "Imodoka zi kodeshwa",
+  
     "Carconnect Ltd",
     "CarconnectLtd",
     "car rental Rwanda",
     "rent car Kigali",
-    "car sharing Rwanda",
+    "Rent a Car in Rwanda",
     "list your car Rwanda",
   ],
   metadataBase: new URL("https://getcarconnect.com"),
@@ -31,6 +37,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
     apple: "/apple-icon.png",
   },
+  other: [
+    { name: 'google-site-verification', content: 'OZvDP0NmwueQcWYYnGjl94p02DJirItltOJt3Gb90o8' }
+  ],
 }
 
 export default function RootLayout({
