@@ -6,8 +6,26 @@ import { LanguageProvider } from "../contexts/LanguageContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "CarConnect Ltd ",
-  description: "Carconnect Ltd - Revolutionizing Transportation and Mobility Solutions",
+  title: "MuvCar by Carconnect Ltd | Car Rental & Car Sharing in Rwanda",
+  description:
+    "MuvCar by Carconnect Ltd is a smart platform for car rental and car sharing in Rwanda. Rent cars in Kigali or list your own vehicle easily with CarconnectLtd.",
+  keywords: [
+    "MuvCar",
+    "Carconnect Ltd",
+    "CarconnectLtd",
+    "car rental Rwanda",
+    "rent car Kigali",
+    "car sharing Rwanda",
+    "list your car Rwanda",
+  ],
+  metadataBase: new URL("https://getcarconnect.com"),
+  openGraph: {
+    title: "MuvCar by Carconnect Ltd | Rent & List Cars in Rwanda",
+    description:
+      "Carconnect Ltd presents MuvCar — the easiest way to rent cars or list your own in Kigali and across Rwanda. Fast, simple, and reliable.",
+    url: "https://getcarconnect.com",
+    type: "website",
+  },
   generator: "CarConnect",
   icons: {
     icon: "/logo.png",
